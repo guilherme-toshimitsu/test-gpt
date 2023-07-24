@@ -3,9 +3,9 @@ const router = require("express").Router();
 
 const openai = require("./openai");
 const { generatePrompt } = require("./utils");
-const { createErrorLogger, createInfoLogger, logger } = require("../logs");
+const { logger } = require("../logs");
 
-const FUNCTION_NAME = "chatgptExpress";
+// const FUNCTION_NAME = "chatgptExpress";
 
 router.post("/gptstream", async (req, res) => {
   res.statusCode = 200;
@@ -16,7 +16,6 @@ router.post("/gptstream", async (req, res) => {
 
   try {
     let data = req.body;
-    createInfoLogger(FUNCTION_NAME, JSON.stringify(data));
     logger.info(JSON.stringify(data));
     let prompt = generatePrompt(data);
     if (!prompt) {
@@ -52,7 +51,7 @@ router.post("/gptstream", async (req, res) => {
             functions.logger.info("ChatGPTEndedStream", {
               stream: fullstream,
             });
-            createInfoLogger(FUNCTION_NAME, fullstream);
+            logger.info(fullstream);
             res.end("");
             return; // Stream finished
           } else {
@@ -60,13 +59,13 @@ router.post("/gptstream", async (req, res) => {
             fullstream.concat(parsed.choices[0].delta.content);
           }
         } catch (error) {
-          createErrorLogger(FUNCTION_NAME, error);
+          logger.error(error);
           res.status(500).send({ message: error });
         }
       }
     });
   } catch (e) {
-    createErrorLogger(FUNCTION_NAME, e);
+    logger.error(e);
     res.status(500).send({ message: e });
   }
 });
