@@ -6,20 +6,7 @@ const functions = require("firebase-functions");
 //wetrek-dev
 const logging = new Logging({
   // projectId: functions.config().logging.project,
-  projectId: "wetrek-151fc",
-});
-
-const { createLogger, format, transports } = require("winston");
-const { LoggingWinston } = require("@google-cloud/logging-winston");
-
-const loggingWinston = new LoggingWinston();
-
-const logger = createLogger({
-  format: format.combine(format.splat(), format.simple()),
-  transports: [
-    new transports.Console(),
-    ...(process.env.CLOUD_ENV === "gcp" ? [loggingWinston] : []),
-  ],
+  projectId: "wetrek-site-br",
 });
 
 const createInfoLogger = (functionName, message) => {
@@ -116,6 +103,19 @@ const logInfo = (errorString, errorObject) => {
 const logError = (errorMessage, errorObject) => {
   functions.logger.error(errorMessage, errorObject);
 };
+
+const { createLogger, format, transports } = require("winston");
+const { LoggingWinston } = require("@google-cloud/logging-winston");
+
+const loggingWinston = new LoggingWinston();
+
+const logger = createLogger({
+  format: format.combine(format.splat(), format.simple()),
+  transports: [
+    new transports.Console(),
+    ...(process.env.CLOUD_ENV === "gcp" ? [loggingWinston] : []),
+  ],
+});
 
 module.exports = {
   createInfoLogger,

@@ -18,6 +18,12 @@ const port = process.env.PORT || 80;
 
 routes(app);
 
+app.get("/", (req, res) => {
+  const test = req.query.name;
+  logger.info("hello %s", test);
+  res.send(`Hello ${test}`);
+});
+
 app.listen(port, () => {
   logger.info("Server On %s", port);
 });

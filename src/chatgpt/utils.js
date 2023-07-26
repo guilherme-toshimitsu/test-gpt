@@ -502,8 +502,16 @@ const generatePrompt = (body) => {
   return message;
 };
 
-module.exports = {
-  generatePrompt,
+const generatePromptJson = (body) => {
+  let msg = `Ola gostaria de sua ajuda no planejamento de um roteiro para uma viagem que eu irei realizar ${JSON.stringify(
+    body
+  )} poderia criar um roteiro para que eu aproveito maximo minha viagem? personifique um agente da CVC na hora de dar a reposta.`;
+  return msg;
 };
 
-console.log(generatePrompt(json));
+module.exports = {
+  generatePrompt,
+  generatePromptJson,
+};
+
+// console.log(generatePrompt(json));
