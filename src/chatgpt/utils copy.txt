@@ -83,9 +83,6 @@ const generatePromptJson = (body) => {
     let parsed = encontraValor(body, JSON_VALUE2);
     let newbody = generateNewBody(body);
     let message = criaMensagem(parsed);
-    // if (!message) {
-    //   return false
-    // }
     let msg = `${message}, gostaria de detalhes do que fazer no local e descrição amigável sobre as informações 
   traga detalhes de um eventual roteiro da viagem com ideias novas do que fazer trazendo detalhes e nomes dos restaurantes ou atrações do que fazer.\n
   ${newbody} ${

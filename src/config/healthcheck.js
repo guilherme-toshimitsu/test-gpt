@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const fetchNode = require("node-fetch");
 const cron = require("node-cron");
+const { logger } = require("../logs/index");
 
 // Keep API Alive
 if (process.env.KEEP_UP != "false") {
@@ -11,6 +12,7 @@ if (process.env.KEEP_UP != "false") {
 
 // Health Check Endpoint
 router.get("/", async (req, res) => {
+  logger.info("healthcheck");
   res.json({ status: "ok" });
 });
 

@@ -12,6 +12,7 @@ router.post("/gptstream", async (req, res) => {
     let prompt;
     try {
       let data = req.body;
+      logger.info(`call gptstream with: \n ${JSON.stringify(data)}`);
       prompt = generatePromptJson(data);
       if (!prompt) {
         logger.error("error generating your prompt");
